@@ -1,19 +1,17 @@
 package com.matheus.apispring.domain;
 
 import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Category implements Serializable {
+public class City implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -21,16 +19,18 @@ public class Category implements Serializable {
     private Integer id;
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    private List<Product> products = new ArrayList<Product>();
+    @ManyToOne
+    @JoinColumn(name = "state_id")
+    private State state;
 
-    public Category() {
+    public City() {
     }
 
-    public Category(Integer id, String name) {
+    public City(Integer id, String name, State state) {
         super();
         this.id = id;
         this.name = name;
+        this.state = state;
     }
 
     public Integer getId() {
@@ -49,6 +49,14 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
@@ -62,16 +70,8 @@ public class Category implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Category other = (Category) obj;
+        City other = (City) obj;
         return Objects.equals(id, other.id);
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 
 }

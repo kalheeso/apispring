@@ -1,11 +1,12 @@
 package com.matheus.apispring.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.stereotype.Repository;
 
-import com.matheus.apispring.domain.Category;
+import com.matheus.apispring.domain.City;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
+public interface CityRepository extends JpaRepository<City, Integer> {
 
 }
