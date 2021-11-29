@@ -45,7 +45,7 @@ public class CategoryResource {
     public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoryDTO categoryDTO) {
         Category category = service.fromDTO(categoryDTO);
         category.setId(id);
-        service.update(category);
+        category = service.update(category);
         return ResponseEntity.noContent().build();
     }
 
@@ -58,7 +58,7 @@ public class CategoryResource {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CategoryDTO>> findAll() {
         List<Category> listCat = service.findAll();
-        List<CategoryDTO> listCatDTO = CategoryDTO.parseCatListIntoCatDTOList(listCat);
+        List<CategoryDTO> listCatDTO = CategoryDTO.parseListIntoDTOList(listCat);
         return ResponseEntity.ok().body(listCatDTO);
     }
 

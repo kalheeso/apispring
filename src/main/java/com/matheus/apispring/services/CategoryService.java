@@ -1,6 +1,7 @@
 package com.matheus.apispring.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.matheus.apispring.dto.CategoryDTO;
@@ -24,9 +25,7 @@ public class CategoryService {
 
     public Category findById(Integer id) {
         Optional<Category> obj = repo.findById(id);
-        return obj.orElseThrow(
-                () -> new ObjectNotFoundException("Object not found! ID: " + id
-                        + ". Object type: " + Category.class.getName()));
+        return obj.get();
     }
 
     public Category create(Category category) {
@@ -35,8 +34,9 @@ public class CategoryService {
     }
 
     public Category update(Category category) {
-        category = findById(category.getId());
-        return repo.save(category);
+        Category updateCategory = repo.findById(category.getId()).get();
+        updateData(category, updateCategory);
+        return repo.save(updateCategory);
     }
 
     public void delete(Integer id) {
@@ -59,5 +59,10 @@ public class CategoryService {
 
     public Category fromDTO(CategoryDTO categoryDTO){
         return new Category(categoryDTO.getId(), categoryDTO.getName());
+    }
+
+    public void updateData(Category category, Category updateCategory){
+        updateCategory.setName(category.getName());
+        updateCategory.setProducts(category.getProducts());
     }
 }

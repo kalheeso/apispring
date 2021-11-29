@@ -25,7 +25,7 @@ public class CategoryDTO implements Serializable {
         this.name = cat.getName();
     }
 
-    public static List<CategoryDTO> parseCatListIntoCatDTOList(List<Category> categoryList){
+    public static List<CategoryDTO> parseListIntoDTOList(List<Category> categoryList){
         List<CategoryDTO> categoryDTOList = new ArrayList<>();
         for(Category category: categoryList){
             CategoryDTO categoryDTO = new CategoryDTO(category);
